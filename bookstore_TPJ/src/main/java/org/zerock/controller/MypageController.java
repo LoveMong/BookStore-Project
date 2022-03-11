@@ -141,6 +141,9 @@ public class MypageController {
          serchPD.setKeyword(keyword);
          serchPD.setSearchType(searchType);
          
+         log.info("serchPD12 : " + serchPD);
+
+         
          
          int myOrderListCnt =  orderService.searchlistcnt(serchPD);
          serchPD.pageInfo(page, range, myOrderListCnt);

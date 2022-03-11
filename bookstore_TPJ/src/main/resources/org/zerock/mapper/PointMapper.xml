@@ -11,7 +11,8 @@
 
 <select id="dateRead" resultType="org.zerock.domain.Bs_PointVO">
 
-	SELECT point_date, point_num, user_id, sum(point_charge) as point_charge , point_payment , point 
+	SELECT ANY_VALUE(point_date), ANY_VALUE(point_num), user_id, sum(point_charge) as point_charge , ANY_VALUE(point_payment) , ANY_VALUE(point)
+	<!-- ANY_VALUE() : GROUP BY 쿼리 에러 해결 방법 -->
 	from bs_point 
 	where user_id = #{user_id}
 	<if test="startDate != null and startDate != '' and endDate != null and endDate != '' ">
@@ -19,7 +20,7 @@
 	</if>
 	GROUP BY FLOOR(MINUTE(point_date)), point
 	order by point_num desc
-	limit #{startList}, #{listSize}	
+	limit #{startList}, #{listSize}
 </select>
 
 
