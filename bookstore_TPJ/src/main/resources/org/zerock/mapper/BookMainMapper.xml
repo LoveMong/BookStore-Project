@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zerock.mapper.BookMainMapper">
+
+<select resultType="org.zerock.domain.Bs_BookVO" id="dateselect">
+	select * from bs_book order by bk_pdate desc limit 10
+</select>
+
+
+<!-- 회원정보 조회 -->
+<select resultType="org.zerock.domain.Bs_UserVO" id="login">
+	select * from bs_user where user_id = #{user_id} 
+</select>
+
+<select resultType="int" id="idCheck">
+	select count(*) from bs_user where user_id=#{user_id} 
+</select>
+
+
+<insert id="register">
+   insert into bs_user(user_id, user_pw, user_phone, user_name, user_addr, user_email)
+   values (#{user_id},#{user_pw},#{user_phone},#{user_name}, #{user_addr}, #{user_email}) 
+</insert>
+
+<!-- 아이디찾기를 위한 추가  -->
+<select resultType="org.zerock.domain.Bs_UserVO" id="mailCheck">
+	select * from bs_user where user_email = #{user_email} and user_name = #{user_name}
+</select>
+<select resultType="int" id="mailCheckCnt">
+	select count(*) from bs_user where user_email = #{user_email} and user_name = #{user_name}
+</select>
+<!-- 비밀번호찾기를 위한 추가 -->
+<select resultType="org.zerock.domain.Bs_UserVO" id="pasmailCheck">
+	select * from bs_user where user_email = #{user_email} and user_id = #{user_id}
+</select>
+<select resultType="int" id="pasmailCheckCnt">
+	select count(*) from bs_user where user_email = #{user_email} and user_id = #{user_id}
+</select>
+
+
+<insert id="addcart">
+	insert into bs_cart(user_id, od_num, bk_num)values (#{user_id}, #{od_num}, #{bk_num}) 
+</insert>
+
+
+
+<insert id="comment">
+	insert into bs_review(rev_rank, user_id, bk_num, rev_comment)
+	values(#{rev_rank}, #{user_id}, #{bk_num}, #{rev_comment}) 
+</insert>
+
+
+
+<select resultType="int" id="ordCheck">
+	select count(od_num) from bs_order where user_id=#{user_id} and bk_num=#{bk_num} 
+</select>
+
+<select resultType="_double" id="selectsum">
+	select ifnull(sum(rev_rank), 0) from bs_review where bk_num = #{bk_num} 
+</select>
+
+<select resultType="int" id="rankcount">
+	select count(rev_rank) from bs_review where bk_num = #{bk_num} 
+</select>
+
+<delete id="commentdelete">
+	delete from bs_review where rev_num = #{rev_num} 
+</delete>
+
+<update id="commentupdate">
+	update bs_review set rev_rank = #{rev_rank}, rev_comment = #{rev_comment} where rev_num = #{rev_num}
+</update>
+
+<select id="getBookList" resultType="org.zerock.domain.Bs_BookVO">
+	select * from bs_book
+	where bk_category = #{code}
+	limit #{startList}, #{listSize}
+</select>
+
+<select id="getBookListCnt" resultType="int">
+	select count(*) as listCnt
+	from bs_book
+	where bk_category = #{code}
+</select>
+
+<select id="searchlist" resultType="org.zerock.domain.Bs_BookVO">
+	select *
+	from bs_book
+    <trim prefix="where" prefixOverrides="AND|OR">
+		<if test="searchType=='title' and keyword != null and keyword != '' ">
+			and bk_name like CONCAT('%', #{keyword}, '%')
+		</if>
+		<if test="searchType=='content' and keyword != null and keyword != '' ">
+			and bk_writer like CONCAT('%', #{keyword}, '%')
+		</if>
+	</trim>
+	order by bk_num desc
+	limit #{startList}, #{listSize}	
+</select>
+
+<select id="searchlistcnt" resultType="int">
+	select count(*) as listCnt
+	from bs_book
+    <trim prefix="where" prefixOverrides="AND|OR">
+		<if test="searchType=='title' and keyword != null and keyword != '' ">
+			and bk_name like CONCAT('%', #{keyword}, '%')
+		</if>
+		<if test="searchType=='content' and keyword != null and keyword != '' ">
+			and bk_writer like CONCAT('%', #{keyword}, '%')
+		</if>
+	</trim>
+</select>
+
+
+<update id="revupdate">
+	update bs_book set bk_rank=#{rank} where bk_num=#{bk_num}
+</update>
+
+<update id="userupdate"> 
+	update bs_user 
+	
+	 <trim prefix="set" suffixOverrides="," prefixOverrides=","> 
+		<if test="user_pw != null and user_pw != '' ">
+			, user_pw = #{user_pw} 
+		</if>
+		<if test="user_phone != null and user_phone != '' ">
+			, user_phone = #{user_phone}
+		</if>
+		<if test="user_addr != null and user_addr != '' ">
+			, user_addr = #{user_addr} ,
+		</if>
+	</trim>
+	
+	
+	where user_id = #{user_id}; 
+	
+</update>
+
+
+<update id="userpointupdate"> 
+	update bs_user set user_point = #{user_point} where user_id = #{user_id}; 
+	
+</update>
+
+
+<select id="rankselect" resultType="org.zerock.domain.Bs_BookVO">
+	select * from bs_book order by bk_rank desc limit 10
+</select>
+<select id="revranklist" resultType="org.zerock.domain.Bs_BookVO">
+	select * from bs_book
+	order by bk_sellcnt desc, bk_rank desc
+	limit #{startList}, #{listSize}
+</select>
+
+<select id="revranklistcnt" resultType="int">
+	select count(*) as listCnt
+	from bs_book
+	order by bk_sellcnt desc, bk_rank desc
+</select>
+<select id="newbooklist" resultType="org.zerock.domain.Bs_BookVO">
+	select * from bs_book
+	order by bk_pdate desc
+	limit #{startList}, #{listSize}
+</select>
+<select id="newbooklistcnt" resultType="int">
+	select count(*) as listCnt
+	from bs_book
+	order by bk_pdate desc
+</select>
+<select resultType="org.zerock.domain.Bs_BookVO" id="detail">
+	select * from bs_book where bk_num=#{bk_num} 
+</select>
+<select resultType="org.zerock.domain.Bs_ReviewVO" id="selectcomment">
+	select * from bs_review where bk_num=#{bk_num} order by rev_num desc 
+</select>
+<select resultType="int" id="decommentcnt">
+	select count(*) as listCnt
+	from bs_review 
+	where bk_num=#{bk_num} 
+</select>
+<select resultType="org.zerock.domain.Bs_ReviewVO" id="decomment">
+	select * from bs_review 
+	where bk_num=#{bk_num} 
+	order by rev_num desc
+	limit #{startList}, #{listSize}
+</select>
+<select id="bestselect" resultType="org.zerock.domain.Bs_BookVO">
+	select * from bs_book order by bk_sellcnt desc, bk_rank desc limit 10
+</select>
+
+<select id="check" resultType="int">
+
+	SELECT count(user_id)
+	
+	FROM bs_user
+	
+	WHERE user_id = #{userId}
+
+</select>
+
+<insert id="regiUser">
+
+	INSERT INTO bs_user(user_id, user_name)
+	
+	VALUES(#{userId}, #{userNickName})
+
+</insert>
+
+<select id="infoUser" resultType="org.zerock.domain.Bs_UserVO">
+
+	SELECT *
+	
+	FROM bs_user
+	
+	WHERE user_id = #{userId}
+</select>
+
+<select id="selectPoint" resultType="org.zerock.domain.Bs_UserVO">
+	select * from bs_user where user_id = #{user_id}
+</select>
+
+</mapper>

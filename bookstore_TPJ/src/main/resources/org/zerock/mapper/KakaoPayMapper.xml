@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zerock.mapper.KakaoPayMapper">
+<update id="pointupdate"> 
+	update bs_user set user_point = #{point} where user_id = #{userid}; 
+</update>
+<insert id="insert">
+	insert into bs_point (user_id, point, point_charge) values(#{userid}, #{point} , #{pointCharge})
+</insert>
+</mapper>
