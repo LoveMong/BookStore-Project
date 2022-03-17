@@ -107,7 +107,7 @@
 						</colgroup>
 						<tr>
 							<th id="col1">
-								주문자 
+								주문자
 							</th>
 							<td id="col2">
 								${memberinfo.memberName} <span>|</span> ${memberinfo.memberPhone } <span>|</span> ${memberinfo.memberEmail }
@@ -182,7 +182,7 @@
 							<div class="address_imput_3_wrap">
 								<div class="address_input_3_box">
 									<input class="address_input_3" name="memberAddr3" readonly="readonly">
-								</div>							
+								</div>			
 							</div>
 							
 						</table>

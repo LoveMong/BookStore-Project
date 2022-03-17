@@ -65,9 +65,9 @@ public interface BookStoreMapper {
 	
 	public void delCart(Bs_PayInfoVo vo) throws Exception;
 	
-	public void minuPoint(Bs_PayInfoVo vo) throws Exception;
+	public void minuPoint(@Param("uPoint") int uPoint, @Param("userID") String userID) throws Exception;
 	
-	public void infoPayment(Bs_PayInfoVo vo) throws	Exception;
+	public void infoPayment(@Param("userID") String userID, @Param("tPrice") int tPrice, @Param("uPoint") int uPoint ) throws Exception;
 	
 	public void payInfoShipPC(@Param("userID") String userID ,@Param("shipPrice") int shipPrice, @Param("user_point") int user_point);
 	

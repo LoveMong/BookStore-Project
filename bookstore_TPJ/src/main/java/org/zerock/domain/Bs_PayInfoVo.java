@@ -9,12 +9,14 @@ public class Bs_PayInfoVo {
 	private int bkPrice;			//userid에 남은 포인트를 저장
 	private int bkOdcnt;
 	private int cartNum;
-	private int totalPrice;
+    private int totalPrice;
 	private String userId;
-	private int userPoint;
+    private int userPoint;
 	private String reci_addr;
 	private String reci_name;
 	private String reci_phone;
 	private int saleBkPrice;
+
+	
 	
 }

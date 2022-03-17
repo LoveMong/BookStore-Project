@@ -239,9 +239,9 @@
 
 <insert id="payContent">
 	
-	INSERT INTO bs_order(bk_num, bk_ordercnt, user_id, user_addr, bk_salePrice)
+	INSERT INTO bs_order(bk_num, bk_ordercnt, user_id, user_addr)
 	
-	VALUES(#{bkNum}, #{bkOdcnt}, #{userId}, #{reci_addr}, #{saleBkPrice})
+	VALUES(#{bkNum}, #{bkOdcnt}, #{userId}, #{reci_addr})
 	
 </insert>
 
@@ -277,9 +277,9 @@
 
 	UPDATE bs_user
 	
-	SET user_point = #{userPoint}
+	SET user_point = #{uPoint}
 	
-	WHERE user_id = #{userId} 	
+	WHERE user_id = #{userID} 	
 
 </update>
 
@@ -287,19 +287,10 @@
 
 	INSERT INTO bs_point(user_id, point, point_payment)
 	
-	VALUES(#{userId}, #{userPoint} ,#{totalPrice})
+	VALUES(#{userID}, #{uPoint} ,#{tPrice})
 	
 </insert>
 
-<update id="shipPrice">
-
-	UPDATE bs_user
-	
-	SET user_point = user_point - #{shipPrice}
-	
-	WHERE user_id = #{userID} 	
-
-</update>
 
 <select id="user_amount" resultType="integer">
 
@@ -332,15 +323,6 @@
 	WHERE user_id = #{userID} 	
 
 </update>
-
-<insert id="payInfoShipPC">
-
-	INSERT INTO bs_point(user_id, point, point_payment)
-	
-	VALUES(#{userID}, #{user_point}, #{shipPrice})
-	
-</insert>
-
 
 
 </mapper>

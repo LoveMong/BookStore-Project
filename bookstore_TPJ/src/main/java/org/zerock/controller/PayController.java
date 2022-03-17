@@ -1,13 +1,18 @@
 package org.zerock.controller;
 
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.zerock.domain.Bs_OrderDTO;
 import org.zerock.domain.Bs_OrderList;
+import org.zerock.domain.Bs_PayInfoDTO;
 import org.zerock.domain.Bs_PayInfoVo;
 import org.zerock.domain.Bs_PointVO;
 import org.zerock.domain.Bs_UserVO;
@@ -36,6 +42,11 @@ public class PayController {
 	
 	@Autowired
 	private PointService pointService;
+	
+	String odAdress;
+	int uPoint;
+	int tPrice;
+
 	
 	
 	@GetMapping("/payment")
@@ -118,17 +129,45 @@ public class PayController {
 	
 	@RequestMapping(value ="/LastPayment", method = RequestMethod.POST)
 	@ResponseBody
-	public void lastPayment(Bs_PayInfoVo vo, HttpSession session) throws Exception {
+	public void lastPayment(@ModelAttribute(value="Bs_PayInfoDTO") Bs_PayInfoDTO dto, HttpSession session) throws Exception {
 		
-		log.info(vo);		
+		log.info("dto  : " + dto);	
+		
+		Bs_UserVO login = (Bs_UserVO) session.getAttribute("login");
+	    String userID = login.getUser_id();
 		
 		
-		service.payContent(vo);
-		service.addBookSel(vo);
-		service.minuStock(vo);
-		service.delCart(vo);
-		service.minuPoint(vo);
+		for(int i = 0; i < dto.getPayInfolist().size(); i++) {
+			
+			Bs_PayInfoVo payInfo;
+			
+			payInfo = dto.getPayInfolist().get(i);
+			
+			payInfo.setReci_addr(odAdress);
+			
+			service.payContent(payInfo);
+			service.addBookSel(payInfo);
+			service.minuStock(payInfo);
+			service.delCart(payInfo);
+			
+			
 		
+			
+		}		
+		
+		service.minuPoint(uPoint, userID);	
+		service.infoPayment(userID, tPrice, uPoint);	
+		
+
+		
+		
+		
+//		service.payContent(vo);
+//		service.addBookSel(vo);
+//		service.minuStock(vo);
+//		service.delCart(vo);
+//		service.minuPoint(vo);
+//		
 //		PointSerchPD pPd = new PointSerchPD();
 //		SimpleDateFormat format1 = new SimpleDateFormat ("yyyy-MM-dd");
 //		Date time = new Date();
@@ -155,9 +194,6 @@ public class PayController {
 //	
 		
 		
-		
-		Bs_UserVO login = (Bs_UserVO) session.getAttribute("login");
-	    String userID = login.getUser_id();    
 	    
 	    Integer user_amount = service.user_amount(userID);
 		int user_rank = login.getUser_rank();
@@ -178,19 +214,36 @@ public class PayController {
 			service.upgrade_VVIP(userID);
 		
 		}
+		
 	
 	}
 	
 
-	@RequestMapping(value ="/LastPayment", method = RequestMethod.GET)
+	@RequestMapping(value ="/infoPayment", method = RequestMethod.POST)
 	@ResponseBody
-	public void lastPayment(@RequestParam("shipPrice") int shipPrice, @RequestParam("user_point") int user_point, HttpSession session) throws Exception {
+	public void lastPayment(@RequestParam("addr") String addr,
+							@RequestParam("tPrice") int totalPrice,
+							@RequestParam("uPoint") int userPoint, HttpSession session) throws Exception {
 	
-		Bs_UserVO login = (Bs_UserVO) session.getAttribute("login");
-	    String userID = login.getUser_id();
-	    log.info(" 값 : " + shipPrice + user_point);
+//		@RequestParam(value = "shipPrice", required = false) int shipPrice,
+//		@RequestParam(value = "user_point", required = false ) int user_point,
 		
-		service.shipPrice(userID, shipPrice);
+		
+//		Bs_UserVO login = (Bs_UserVO) session.getAttribute("login");
+//	    String userID = login.getUser_id();
+	    
+	    odAdress = addr;
+	    	tPrice = totalPrice;
+	    	uPoint = userPoint;
+	    
+	    log.info("addr : " + addr);
+	    log.info("totalPrice : " + totalPrice);
+	    log.info("userPoint : " + userPoint);
+	    
+//	    log.info(" 값 : " + shipPrice + user_point);
+
+		
+//		service.shipPrice(userID, shipPrice);
 		/* service.payInfoShipPC(userID, shipPrice, user_point); */
 		
 	}

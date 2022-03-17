@@ -140,16 +140,16 @@ public class BookStoreServiceIpml implements BookStoreService{
 	}
 	
 	@Override
-	public void minuPoint(Bs_PayInfoVo vo) throws Exception {
+	public void minuPoint(int uPoint, String userID) throws Exception {
 		
-		mapper.minuPoint(vo);
+		mapper.minuPoint(uPoint, userID);
 		
 	}
 	
 	@Override
-	public void infoPayment(Bs_PayInfoVo vo) throws Exception {
+	public void infoPayment(String userID, int tPrice, int uPoint) throws Exception {
 		
-		mapper.infoPayment(vo);
+		mapper.infoPayment(userID, tPrice, uPoint);
 		
 	}
 	

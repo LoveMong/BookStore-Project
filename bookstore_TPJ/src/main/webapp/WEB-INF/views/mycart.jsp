@@ -283,8 +283,7 @@
 							
 						</div>
 						<script>
-						
-							
+
 							
 							function callpriceSum() {
 								var bookAmount = 0;	
@@ -324,9 +323,7 @@
 								callpriceSum();
 							});
 			
-								
-						
-							
+					
 						
 						</script>
 						

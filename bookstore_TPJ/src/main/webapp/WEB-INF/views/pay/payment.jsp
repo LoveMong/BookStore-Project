@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
@@ -8,15 +7,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Welcome! SJBook Store!</title>
-<!-- <link rel="stylesheet" href="../resources/css/pay/payment.css"> -->
 <script src="https://code.jquery.com/jquery-3.4.1.js"
-	integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-	crossorigin="anonymous"></script>
-<script src="../resources/js/preBuy.js" type="text/javascript"></script>
-<script
-	src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-
-<!-- <script src="../resources/js/detail.js" type="text/javascript"></script> -->
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+	    crossorigin="anonymous"></script>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <style>
 * {
 	margin: 0;
@@ -262,36 +256,29 @@ main_list_head_col2 {
 	<jsp:include page="../include/header.jsp"></jsp:include>
 
 	<div id="main_wrap">
-		<form method="post" action="/pay/LastPayment" id="buy_form">
-			<div id="main_left">
+		<form action="/pay/LastPayment" method="post" onsubmit="return submitCheck();">	
 				<div class="allWrap">
 					<div id="main_buy_info">
 						<div>
-							<strong><h2>구매자 정보</h2></strong>
+							<strong>구매자 정보</strong>
 						</div>
-						<hr />
-						<table>
-							<colgroup>
-								<col width="30%">
-								<col width="*">
-							</colgroup>
 							<!-- 구매자 정보 출력(유저 아이디 / 유저 전화번호) -->
 							<div class="order_cli">
 								<h2>주문자</h2>
 								<hr />
 								<h3>${login.user_name}[${login.user_phone }]</h3>
 							</div>
-     						<hr />
      						<div>
 								<input type="hidden" id="userId" value="${login.user_id}">
 								<input type="hidden" id="userPoint" value="${login.user_point}">
 							</div>
-						</table>
-					</div>
+					  </div>
+				
+					  
 					<!-- 배송지 선택 및 입력 -->
 					<div id="main_buy_addr">
 						<div>
-							<strong><h3>배송정보</h3></strong>
+							<strong>배송정보</strong>
 						</div>
 						<hr />
 						<div class="tabBox">
@@ -305,23 +292,15 @@ main_list_head_col2 {
 								<br />
 								<div class="arrdGroup alert alert-dismissible alert-warning">
 									<div>
-										<input type="radio" name="addrconfirm"
-											id="liston${vs.getIndex()}" class="liston"
-											value="click${vs.getIndex()}"> <span>받는 사람 :
-											${addrList.rec_name }</span>
+										<input type="radio" name="addrconfirm" id="liston${vs.getIndex()}" class="liston" value="click${vs.getIndex()}">
+										<span>받는 사람 : ${addrList.rec_name }</span>
 										<hr />
-										<input type="hidden" name="receiver_name"
-											id="receiver_name${vs.getIndex()}"
-											value="${addrList.rec_name }" class="nameValue">
+										<input type="hidden" name="receiver_name" id="receiver_name${vs.getIndex()}" value="${addrList.rec_name }" class="nameValue">
 										<h4>주소 : ${addrList.rec_addr }</h4>
-										<input type="hidden" name="rec_addr"
-											id="rec_addr${vs.getIndex()}" value="${addrList.rec_addr }"
-											class="addrValue">
+										<input type="hidden" name="rec_addr" id="rec_addr${vs.getIndex()}" value="${addrList.rec_addr }" class="addrValue">
 										<hr />
 										<h4>휴대전화 : ${addrList.rec_phone }</h4>
-										<input type="hidden" name="user_phone"
-											id="user_phone${vs.getIndex()}"
-											value="${addrList.rec_phone }" class="phoneValue">
+										<input type="hidden" name="user_phone" id="user_phone${vs.getIndex()}" value="${addrList.rec_phone }" class="phoneValue">
 									</div>
 								</div>
 							</c:forEach>
@@ -329,54 +308,53 @@ main_list_head_col2 {
 					</div>
 					<!-- 배송지 직접 입력 TAP -->
 					<div id="tab-2" class="tab-content">
-						<form id="" method="">
-							<table>
-								<colgroup>
-									<col width="30%">
-									<col width="*">
-								</colgroup>
-								<tr class="">
-									<th>받는이</th>
-									<td><input type="text" name="orderRec" id="orderRec">
-									</td>
-								</tr>
-								<tr class="">
-									<th>휴대전화</th>
-									<td><input type="text" name="orderPhone" id="orderPhone">
-									</td>
-								</tr>
-								<div class="address_imput_1_wrap">
+
+								<div style="margin-top: 50px" class="address_imput_1_wrap">
 									<div class="address_input_1_box">
 										<input class="address_input_1" name="memberAddr1"
 											id="memberAddr1" readonly="readonly">
 									</div>
-									<div class="address_button" onclick="execution_daum_address()">
-										<br /> <span type="text" class="btn btn-outline-primary">주소
-											찾기</span>
-										<div class="clearfix"></div>
-									</div>
 								</div>
-								<div class="address_imput_2_wrap">
+								
+								<div style="margin-top: 5px" class="address_imput_2_wrap">
 									<div class="address_input_2_box">
 										<input class="address_input_2" name="memberAddr2"
 											id="memberAddr2" readonly="readonly">
 									</div>
 								</div>
-								</div>
-								<div class="address_imput_3_wrap">
+								
+								<div style="margin-top: 5px" class="address_imput_3_wrap">
 									<div class="address_input_3_box">
 										<input class="address_input_3" name="memberAddr3"
 											id="memberAddr3" readonly="readonly">
 									</div>
 								</div>
-								<br />
-								<input type="hidden" id="user_id" value="${login.user_id}">
-								<input type="button" class="btn btn-outline-primary" id="addAddr" value="등록">
-							</table>
-						</form>
+								
+								<div style="margin-bottom: 50px" class="address_button" onclick="execution_daum_address()">
+								  <br /> <span type="text" class="btn btn-outline-primary">주소 찾기</span>
+								  <div class="clearfix"></div>
+								</div>
+								
+								<table style="height: 100px">
+									<colgroup>
+										<col width="30%">
+										<col width="*">									
+									</colgroup>									
+									<tr class="">
+										<td>받는이</td>
+										<td><input type="text" name="orderRec" id="orderRec">
+										</td>
+									</tr>
+									<tr class="">
+										<td>휴대전화</td>
+										<td><input type="text" name="orderPhone" id="orderPhone">
+										</td>
+									</tr>							
+						        </table>								
+						<div style="margin-top: 30px"><input type="button" class="btn btn-outline-primary" id="addAddr" value="등록"></div>
 					</div>
 
-					<div id="main_list">
+					<div id="main_list" style="margin-top: 200px; margin-bottom: 100px">
 						<h2>주문상품</h2>
 						<table>
 							<thead>
@@ -393,23 +371,20 @@ main_list_head_col2 {
 								<c:set var="finalTotalPoint" value="0" />
 
 								<c:forEach items="${list}" var="list" varStatus="vs">
+								    <input type="hidden" id="user_id" value="${login.user_id}" name = "PayInfolist[${vs.getIndex()}].userId">
 									<tr>
-										<td class="main_list_col1"><img
-											src="${list.bk_thumbUrl }"
-											style="width: 100px; height: 110px"></td>
-										<td class="main_list_col2">${list.bk_name }<input
-											type="hidden" id="bkName${vs.getIndex()}"
-											value="${list.bk_name }"> <input type="hidden"
-											id="bkNum${vs.getIndex()}" value="${list.bk_num }">
-
+										<td class="main_list_col1"><img src="${list.bk_thumbUrl }" style="width: 100px; height: 110px">
 										</td>
-										<td class="main_list_col3"><fmt:formatNumber
-												value="${list.bk_price}" pattern="#,###" /> 원 | 수량
-											${list.bk_ordercnt } 개 <input type="hidden"
-											id="bkPrice${vs.getIndex()}" value="${list.bk_price}">
-											<input type="hidden" id="bkOdcnt${vs.getIndex()}"
-											value="${list.bk_ordercnt }"> <input type="hidden"
-											id="cartNum${vs.getIndex()}" value="${list.cart_num }">
+										<td class="main_list_col2">${list.bk_name }
+											<input type="hidden" id="bkName${vs.getIndex()}" value="${list.bk_name }" name = "PayInfolist[${vs.getIndex()}].bkName">
+									  	  	<input type="hidden" id="bkNum${vs.getIndex()}" value="${list.bk_num }" name = "PayInfolist[${vs.getIndex()}].bkNum">
+										</td>
+										
+										<td class="main_list_col3">
+											<fmt:formatNumber value="${list.bk_price}" pattern="#,###" /> 원 | 수량 ${list.bk_ordercnt } 개 
+											<input type="hidden" id="bkPrice${vs.getIndex()}" value="${list.bk_price}" name = "PayInfolist[${vs.getIndex()}].bkPrice" >
+											<input type="hidden" id="bkOdcnt${vs.getIndex()}" value="${list.bk_ordercnt }" name = "PayInfolist[${vs.getIndex()}].bkOdcnt"> 
+											<input type="hidden" id="cartNum${vs.getIndex()}" value="${list.cart_num }" name = "PayInfolist[${vs.getIndex()}].cartNum">
 											<c:choose>
 												<c:when test="${login.user_rank == '0'}">
 													<input type="hidden" id="totalPrice${vs.getIndex()}"
@@ -423,215 +398,37 @@ main_list_head_col2 {
 													<input type="hidden" id="totalPrice${vs.getIndex()}"
 														value="${(list.bk_price*list.bk_ordercnt)*0.95 }">
 												</c:otherwise>
-											</c:choose> <%-- <input type="hidden" id="totalPrice${vs.getIndex()}" value="${list.bk_price*list.bk_ordercnt }"> --%>
-
-
-											<c:set var="total"
-												value="${total + (list.bk_price*list.bk_ordercnt)}" /> <!-- 각 제품의 할인된가격 총합 -->
+											</c:choose>											
+											<c:set var="total" value="${total + (list.bk_price*list.bk_ordercnt)}" /> <!-- 각 제품의 할인된가격 총합 -->
 											<c:set var="discountPrice" value="0" /> <!-- 할인된가격 * 수량 -->
 											<c:set var="discountPriceStock" value="0" /> <!-- 받을 포인트 -->
 											<c:set var="point" value="0" /> 
-											
-						 <script>
-						 
-							$(document).ready(function(){
-								
-								
-								var phone;
-								var name;
-								var addr;
-								var userPoint
-								var userPoint = ${login.user_point };
-								var finalTotalPrice = Math.floor($('#finalTotalPrice').val());
-								var total = ${total};
-								
-								console.log("total : "+total);
-								console.log("totalPrice : "+ finalTotalPrice);
-								console.log("userPoint : "+ userPoint);
-								
-								
-								$('.liston').click(function(){
-									
-									phone = $(this).parent().find('.phoneValue').val();
-									name = $(this).parent().find('.nameValue').val();
-									addr = $(this).parent().find('.addrValue').val();	
-
-								
-									console.log("name : "+name);									      
-									console.log("phone : "+phone);									      
-									console.log("addr : "+addr);
-						
-								 });	
-					
-							
-							$("#lastPayment").click(function(evt){	
-								
-								
-								var userPoint = ${login.user_point };
-								var finalTotalPrice = Math.floor($('#finalTotalPrice').val());
-								var total = ${total};
-							
-								
-								if(!$("input:radio[name='addrconfirm']").is(":checked")){
-									
-									alert("배송지를 선택해주세요.");
-							    	
-							    	evt.stopImmediatePropagation();
-							    	
-								} else if(!$("input:checkbox[name='checkbox']").is(":checked")) {
-									
-									alert("결제 동의가 필요합니다.");
-							    	
-							    	evt.stopImmediatePropagation();
-								
-								} else if(userPoint < finalTotalPrice ) {
-									
-									alert("Point 잔액이 부족합니다.");
-									
-									evt.stopImmediatePropagation();
-									
-								} else {
-									
-									var userId = $('#userId').val();
-									var userPoint = $('#userPoint').val();
-									var bkName = $('#bkName${vs.getIndex()}').val();
-									var bkNum = $('#bkNum${vs.getIndex()}').val();
-									var bkPrice = $('#bkPrice${vs.getIndex()}').val();
-									var bkOdcnt = $('#bkOdcnt${vs.getIndex()}').val();
-									var cartNum = $('#cartNum${vs.getIndex()}').val();
-									//var totalPrice = Math.floor($('#totalPrice${vs.getIndex()}').val());
-									var totalPrice = Math.floor($('#finalTotalPrice').val());
-									var saleBkPrice = Math.floor($('#totalPrice${vs.getIndex()}').val());
-									
-									userPoint = userPoint - totalPrice;
-									
-									
-									console.log("name : "+name);									      
-									console.log("phone : "+phone);									      
-									console.log("addr : "+addr);									      
-									console.log("userId : "+userId);									      
-									console.log("bkName : "+bkName);									      
-									console.log("bkNum : "+bkNum);									      
-									console.log("bkPrice : "+bkPrice);									      
-									console.log("bkOdcnt : "+bkOdcnt);									      
-									console.log("totalPrice : "+totalPrice);									      
-									console.log("saleBkPrice : "+saleBkPrice);									      
-									console.log("userPoint : "+userPoint);									      
-																		      
-																	      
-							
-							    $.ajax({			
-										url: "LastPayment",
-										type: "POST",
-										data:{
-											"reci_name" : name,						      
-											"reci_phone" : phone,									      
-											"reci_addr" : addr,									      
-											"userId" : userId,
-											"userPoint" : userPoint,											
-											"bkName" : bkName,									      
-											"bkNum" : bkNum,									      
-											"bkPrice" : bkPrice,									      
-											"bkOdcnt" : bkOdcnt,
-											"cartNum" : cartNum,
-											"totalPrice" : totalPrice,
-											"saleBkPrice" : saleBkPrice
-											
-												      
-																								
-									},
-									success: function(data) {
-										
-										location.href="../mypage/order";
-									
-										
-										
-									}
-							
-								});
-					   		}
-						});
-					});						
-							
-					
-						
-							</script>
 								</c:forEach>
 							</tbody>
-
-						<script>
-							
-							$(document).ready(function(e){
-								
-								var shipPrice = $('#shipPrice').val();
-								
-								
-								$("#lastPayment").click(function(){		
-									
-									var userPoint = $('#userPoint').val();
-									var totalPrice = Math.floor($('#finalTotalPrice').val());
-									
-									userPoint = userPoint - totalPrice;
-									console.log("shipPrice : "+shipPrice);
-									
-									
-										
-								    $.ajax({			
-										url: "LastPayment",
-										type: "GET",
-										data:{
-											"shipPrice" : shipPrice,
-											"user_point" : userPoint
-																				
-									},
-									success: function(data) {								
-											
-										
-									}
-							
-										});											      
-									});
-								});
-								
-							
-						 
-						</script>
 						</table>
 					</div>
-					<%-- <div id="main_buy_point">
-						<h1>할인적립</h1>
-						<table>
-							<tr>
-								<th>사용가능 포인트</th>
-								<td><span>${member.point }</span>원 <input type="hidden"
-									id="ownPoint" value="${member.point }"> <input
-									id="point_input" type="text" value="0">원 <a
-									id="point_btn1">모두사용</a> <a id="point_btn2">사용취소</a></td>
-							</tr>
-						</table>
-					</div> --%>
-					<div id="main_buy">
+										
+				<div id="main_buy">
 						<h2>결제정보</h2>
 					</div>
 					<br />
 				</div>
-				<div id="main_right">
+				<div id="main_right" style="margin-bottom: 150px">
 					<div id="final_buy_info">
 						<ul>
 							<li class="totalPrice">
-								<!-- <span id="label">상품금액</span> --> <span type="button"
-								class="btn btn-light">상품금액</span> <span id="label_result">${total}원</span>
+								<!-- <span id="label">상품금액</span> --> 
+								<span type="button" class="btn btn-light">상품금액</span> <span id="label_result"><fmt:formatNumber value="${total}" pattern="#,###" />원</span>
 								<div class="clearfix"></div>
 							</li>
-							<li class="shipPrice"><c:if test="${total >= 30000}">
-									<c:set var="shipPrice" value="0" />
-								</c:if> <c:if test="${total < 30000}">
-									<c:set var="shipPrice" value="3500" />
-								</c:if> <span id="label" class="btn btn-light">배송비[주문 금액 30,000원
-									이상 무료]</span> <!-- <span type="button" class="btn btn-light">상품금액</span> -->
-								<span id="label_result">${shipPrice}원</span> <input
-								type="hidden" name="shipPrice" id="shipPrice"
-								value="${shipPrice }">
+							<li class="shipPrice">
+								<c:if test="${total >= 30000}">
+									<c:set var="shipPrice" value="0" /></c:if>
+								<c:if test="${total < 30000}">
+									<c:set var="shipPrice" value="3500" /></c:if>
+						    <span id="label" class="btn btn-light">배송비[주문 금액 30,000원 이상 무료]</span>
+							<span id="label_result">${shipPrice}원</span> 
+								<input type="hidden" name="shipPrice" id="shipPrice" value="${shipPrice }">
 								<div class="clearfix"></div></li>
 							<li class="sale_price"><c:choose>
 									<c:when test="${login.user_rank == '0'}">
@@ -646,41 +443,36 @@ main_list_head_col2 {
 										<c:set var="sale_price" value="${total*0.05 }" />
 										<c:set var="customerInfo" value="VVIP고객  상품 금액 할인율 5%" />
 									</c:otherwise>
-								</c:choose> <span id="label" class="btn btn-light">할인금액
-									[${customerInfo}]</span> <span id="label_result"><span
-									id="number"> </span> <fmt:formatNumber value="${sale_price}"
-										pattern="#,###" />원</span> <input type="hidden" id="sale_priceInput"
-								name="usePoint" value="0">
+								</c:choose> 
+								<span id="label" class="btn btn-light">할인금액 [${customerInfo}]</span>
+								<span id="label_result"><span id="number"> </span> 
+						    <fmt:formatNumber value="${sale_price}" pattern="#,###" />원</span> <input type="hidden" id="sale_priceInput" name="usePoint" value="0">
 								<div class="clearfix"></div></li>
-							<c:set var="finalTotalPrice"
-								value="${(total+shipPrice)-sale_price }" />
-							<span id="label" class="btn btn-light">최종 결제금액</span>
-							<strong id="label_result"> <span id="number"> <fmt:formatNumber
-										value="${finalTotalPrice}" pattern="#,###" />
-							</span>원
+							<c:set var="finalTotalPrice" value="${(total+shipPrice)-sale_price }" />
+							<span id="label" class="btn btn-light" style="margin-top: 10px">최종 결제금액</span>
+							<strong id="label_result" style="margin-top: 10px"> 
+								<span id="number"> <fmt:formatNumber value="${finalTotalPrice}" pattern="#,###" /></span>원
 							</strong>
-							<input type="hidden" id="finalTotalPrice"
-								value="${finalTotalPrice}">
+					
 
 							<div class="clearfix"></div>
-							</li>
-
+						  </li>
 						</ul>
 					</div>
 					<div id="final_buy_check">
-						<input type="checkbox" name="checkbox" class="btn btn-light">
+						<input type="checkbox" name="checkbox" class="btn btn-light" id="agree">
 						주문내역 확인 동의<strong><필수></strong>
 					</div>
 					<div id="final_buy_button">
-						<input type="button" id="lastPayment"
-							class="btn btn-outline-danger" value="결제하기">
+						<input type="submit" id="lastPayment"
+							class="btn btn-outline-danger" value="결제하기" >
 					</div>
 				</div>
+				</form>
 				<br />
 				<div class="clearfix"></div>
 			</div>
-	</div>
-
+		
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
@@ -700,88 +492,39 @@ main_list_head_col2 {
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	<!-- Bootstrap jQuery Script -->
 	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-
-	<!-- 에러시 여길볼것 -->
-	<script>
-						$('.tab-link').click(function () {
-					        var tab_id = $(this).attr('data-tab');
-					 
-					        $('.tab-link').removeClass('current');
-					        $('.tab-content').removeClass('current');
-					 
-					        $(this).addClass('current');
-					        $("#" + tab_id).addClass('current');
-					
-					    });
-						</script>
-
 	<div id="main_buy_addr_info2" class=""></div>
-	</div>
-
-
-
-
-	</form>
-	</div>
 
 
 
 
 	<jsp:include page="../include/footerBox.jsp"></jsp:include>
 
-	<!-- <div id="side_left_ad"><h1>side left85 703</h1></div> -->
-	</div>
-
-	<%-- <div id="save">
-		<div id="save1">
-			<div id="main_buy_addr_info1_1">
-				받는 사람 : ${memberinfo.memberName} <input type="hidden"
-					name="orderRec" value="${member.memberName }">
-			</div>
-			<div id="main_buy_addr_info1_2">
-				주소 : (${memberinfo.memberAddr1}) ${memberinfo.memberAddr2}
-				${memberinfo.memberAddr3} <input type="hidden" name="memberAddr1"
-					value="${memberinfo.memberAddr1 }"> <input type="hidden"
-					name="memberAddr2" value="${memberinfo.memberAddr2 }"> <input
-					type="hidden" name="memberAddr3" value="${memberinfo.memberAddr3 }">
-			</div>
-			<div id="main_buy_addr_info1_3">
-				휴대전화 : ${memberinfo.memberPhone } <input type="hidden"
-					name="orderPhone" value="${memberinfo.memberPhone}">
-			</div>
-		</div>
-		
-		
-		<div id="save2">
-			<table>
-				<colgroup>
-					<col width="30%">
-					<col width="*">
-				</colgroup>
-				<tr class="receiver_row_name">
-					<th>받는이</th>
-					<td><input type="text" name="orderRec"></td>
-				</tr>
-				<tr class="receiver_row_phone">
-					<th>휴대전화</th>
-					<td><input type="text" name="orderPhone"> <!-- -<input type="text">-<input type="text"> --></td>
-				</tr>
-				<tr class="receiver_row_addr">
-					<th>주소록</th>
-					<td><input id="receiver_row_addr_input1" type="text"
-						readonly="readonly" name="memberAddr1"> <a
-						onclick="execPostCode()">주소록</a> <br> <input
-						id="receiver_row_addr_input2" type="text" readonly="readonly"
-						name="memberAddr2"> <br> <input
-						id="receiver_row_addr_input3" type="text" name="memberAddr3">
-					</td>
-				</tr>
-			</table>
-		</div>
-	</div> --%>
-</body>
 <script type="text/javascript">
 
+
+ var phone;
+ var addr;
+ var name;
+
+
+
+
+
+// 배송 정보 [기본/입력] 설정 
+$('.tab-link').click(function () {
+var tab_id = $(this).attr('data-tab');
+					 
+   $('.tab-link').removeClass('current');
+   $('.tab-content').removeClass('current');
+					 
+   $(this).addClass('current');
+   $("#" + tab_id).addClass('current');
+					
+});
+
+
+
+// daum_주소 검색 api
 function execution_daum_address(){
 	 
     new daum.Postcode({
@@ -830,15 +573,13 @@ function execution_daum_address(){
         }
     }).open();    
  
-}
+};
 
 
 
-
+// 배송지 등록
 $(document).ready(function(e){
 	
-	
-
 	$("#addAddr").click(function(){
 		
 		const userID = $('#user_id').val();
@@ -866,15 +607,114 @@ $(document).ready(function(e){
 				alert("배송지가 등록되었습니다.");
 				location.reload();
 				
-					
-				
 			}
 		});
 	});
 	
 });
 
-</script>
+
+$(document).ready(function(){
+	
+	var userPoint;
+	var totalPrice;
+	
+	totalPrice = "<c:out value='${finalTotalPrice}'/>";
+	userPoint = "<c:out value='${login.user_point - finalTotalPrice }'/>";
+	
+	
+	console.log("totalPrice : " + Math.floor(totalPrice));
+	console.log("userPoint : " + Math.floor(userPoint));
+	
+	
+	$("#lastPayment").click(function(){		
+		
+			
+		
+		$.ajax({			
+			url: "infoPayment",
+			type: "POST",
+			data:{
+				"addr" : addr,
+				"tPrice" : Math.floor(totalPrice),
+				"uPoint" : Math.floor(userPoint),
+						
+		},
+		success: function(data) {								
+				
+			location.href="../mypage/order";
+			
+		}
+
+			});											      
+		});
+});
+
+
+// 배송지 선택
+$(document).ready(function(){
+
+	
+	$('.liston').click(function(){
+
+	   phone = $(this).parent().find('.phoneValue').val();
+	   name = $(this).parent().find('.nameValue').val();
+	   addr = $(this).parent().find('.addrValue').val();	
+			
+	   console.log("name : "+name);									      
+	   console.log("phone : "+phone);									      
+	   console.log("addr : "+addr);
+	   
+	   
+	
+	});
+
+});
+
+
+
+function submitCheck(){
+	
+	
+	
+	var userPoint = ${login.user_point };
+	var finalTotalPrice = Math.floor($('#finalTotalPrice').val());
+	var total = ${total};
+
+	
+	if(!$("input:radio[name='addrconfirm']").is(":checked")){
+		
+		alert("배송지를 선택해주세요.");
+				
+		return false;
+		
+    	
+	} else if(!$("input:checkbox[name='checkbox']").is(":checked")) {
+		
+		alert("결제 동의가 필요합니다.");
+    	   	 	
+   	 	return false;
+   	 	
+	
+	} else if(userPoint < finalTotalPrice ) {
+		
+		alert("Point 잔액이 부족합니다.");
+		
+		return false;
+		
+	} else {
+		
+		return true;
+										      
+
+	}
+};
+
+
+   
+
+      
+</script>		
 
 
 

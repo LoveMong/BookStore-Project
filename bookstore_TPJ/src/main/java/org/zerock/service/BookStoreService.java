@@ -76,11 +76,11 @@ public interface BookStoreService {
 	
 	// 결제 완료 포인트 차감
 	
-    public void minuPoint(Bs_PayInfoVo vo) throws Exception;
+    public void minuPoint(int uPoint, String userID) throws Exception;
     
     // 결제 내역 포인트 정보
     
-    public void infoPayment(Bs_PayInfoVo vo) throws	Exception;
+    public void infoPayment(String userID, int tPrice, int uPoint) throws Exception;
     
     // 배송비 결제
     
