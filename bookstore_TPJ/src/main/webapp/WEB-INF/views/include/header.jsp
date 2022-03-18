@@ -107,13 +107,12 @@ header {
       <div class="row">
          <div class="col-lg-12">
          	<div class="row">
-	            <div class="book_logo mt-5 mb-2" style="    width: 280px;">
+	            <div class="book_logo mt-5 mb-2" style="width: 280px;">
 	               <a href="/main"> <img src="/resources/img/bk_store2.png" alt="">
 	               </a>
 	            </div>
 	            <form action="/search" method="get" style="margin: 110px 0 0 180px;">
-	               <div id="top_1_selection_1_search">
-	            
+	               <div id="top_1_selection_1_search" >	            
 	                  <div class="keyword_box">
 	                     <select name="searchType" id="searchType">
 	                        <option value="title">제목 검색</option>
@@ -149,32 +148,28 @@ header {
 					</ul>
 				</nav>
 				<!-- 로그인 회원가입 마이페이지 -->
-				<div id="top_mini_1">
-					<!-- 
+				<div id="top_mini_1" style="margin-right: 30px">
+				<!-- 마스터에 들어 있던 것  -->
 					<ul class="clearfix">
 						<c:if test="${login==null }">	
 							<li><a href="/login">로그인</a></li>
 							<li><a href="/join">회원가입</a></li>
 						</c:if>
 						<c:if test="${login!=null }">
-							<li><p id="userrank"></p></li>
-							<li><a href="/mypage/paylist">보유포인트 : ${userinfo.user_point }</a></li>
-							<li><a href="/mypage/cart">마이페이지</a></li>
-							<li><a href="/logout">로그아웃</a></li>
-							<c:if test="${login.user_grade==1 }">
-								<li><a href="/admin/product">관리자 페이지</a></li>
-							</c:if>
-						</c:if>
-					</ul> -->
-					<!-- 마스터에 들어 있던 것  -->
-					<ul class="clearfix">
-						<c:if test="${login==null }">	
-							<li><a href="/login">로그인</a></li>
-							<li><a href="/join">회원가입</a></li>
-						</c:if>
-						<c:if test="${login!=null }">
-							<li><p>${login.user_name}님</p></li>
-							<li><p id="userrank"></p></li>
+							<li><p>${login.user_name} 님</p></li>
+							<li>
+								<c:choose>
+									<c:when test="${login.user_rank == '0'}">
+										<p>일반 회원</p>
+									</c:when>
+									<c:when test="${login.user_rank == '1'}">
+										<p>VIP 회원</p>
+									</c:when>
+									<c:otherwise>
+										<p>VVIP 회원</p>
+									</c:otherwise>
+								</c:choose>							
+							</li>
 							<li><a href="/mypage/paylist">보유포인트 : <fmt:formatNumber
 										value="${login.user_point}" pattern="#,###" /> </a></li>
 							<li><a href="/mypage/cart">마이페이지</a></li>
@@ -219,15 +214,7 @@ header {
 		</div>
 	</div>
 </header>
-<script>
-   $(document).ready(function(){ 
-      var grade = ${login.user_rank };
-      var usergrade = user_grade(grade);
-      $('#userrank').text(usergrade);
 
-      
-   });
-</script>
 <script>
    function cateSwitch(val) {
       var result = "";
@@ -272,21 +259,5 @@ header {
       return result;
    }
 </script>
-<script>
-   function user_grade(val) {
-      var result = "";
-      switch(val){
-         case 0:
-            result = "일반";
-            break;
-         case 1:
-            result = "VIP";
-            break;
-         case 2:
-            result = "VVIP";
-            break;
-      }
-      return result;
-   }
-</script>
+
 <!-- Header End -->

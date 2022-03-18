@@ -22,7 +22,7 @@
 <div id="main_nav_wrap">
 	<div id="main_nav">
 		<ul>
-			<li id="main_nav_1"><a href="/mypage/order" class="primary-btn">주문/배송조회</a></li>
+			<li id="main_nav_1"><a href="/mypage/order" class="primary-btn">주문/배송 조회</a></li>
 			
 			<li id="main_nav_1"><a href="/mypage/cart" class="primary-btn">장바구니</a></li>
 		
@@ -34,7 +34,7 @@
 					충전</a></li>
 		
 			<li id="main_nav_3"><a href="/mypage/paylist"
-				class="primary-btn">포인트 충전 리스트</a></li>
+				class="primary-btn">포인트 내역</a></li>
 		</ul>
 	</div>
 </div>

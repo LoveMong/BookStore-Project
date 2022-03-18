@@ -152,49 +152,11 @@ public class PayController {
 			service.delCart(payInfo);
 			
 			
-		
-			
 		}		
 		
 		service.minuPoint(uPoint, userID);	
 		service.infoPayment(userID, tPrice, uPoint);	
-		
 
-		
-		
-		
-//		service.payContent(vo);
-//		service.addBookSel(vo);
-//		service.minuStock(vo);
-//		service.delCart(vo);
-//		service.minuPoint(vo);
-//		
-//		PointSerchPD pPd = new PointSerchPD();
-//		SimpleDateFormat format1 = new SimpleDateFormat ("yyyy-MM-dd");
-//		Date time = new Date();
-//		String time1 = format1.format(time);
-//		
-//		pPd.setEndDate(time1);
-//		pPd.setStartDate(time1);
-//		pPd.setUser_id(vo.getUserId());
-//		
-//		List<Bs_PointVO> pVo = pointService.dateRead(pPd);
-//		
-//		
-//		int pVoPoint = pVo.get(0).getPoint();
-//		int voPoint = vo.getUserPoint();
-//		
-//		log.info("pVoPoint 값 : " + pVoPoint);
-//		log.info("voPoint 값 : " + voPoint);
-//		
-//		if(pVoPoint != voPoint) {
-//			log.info("if문 : " + pVo.get(0).getPoint());
-//			log.info("if문 : " + vo.getUserPoint());
-//			service.infoPayment(vo);
-//		}
-//	
-		
-		
 	    
 	    Integer user_amount = service.user_amount(userID);
 		int user_rank = login.getUser_rank();
@@ -216,6 +178,11 @@ public class PayController {
 		
 		}
 		
+	
+	     login.setUser_point(uPoint);
+	     
+	     session.setAttribute("login", login);
+		
 		return "redirect:/mypage/order";
 		
 	}
@@ -227,12 +194,6 @@ public class PayController {
 							@RequestParam("tPrice") int totalPrice,
 							@RequestParam("uPoint") int userPoint, HttpSession session) throws Exception {
 	
-//		@RequestParam(value = "shipPrice", required = false) int shipPrice,
-//		@RequestParam(value = "user_point", required = false ) int user_point,
-		
-		
-//		Bs_UserVO login = (Bs_UserVO) session.getAttribute("login");
-//	    String userID = login.getUser_id();
 	    
 	    odAdress = addr;
 	    	tPrice = totalPrice;
@@ -241,12 +202,7 @@ public class PayController {
 	    log.info("addr : " + addr);
 	    log.info("totalPrice : " + totalPrice);
 	    log.info("userPoint : " + userPoint);
-	    
-//	    log.info(" 값 : " + shipPrice + user_point);
 
-		
-//		service.shipPrice(userID, shipPrice);
-		/* service.payInfoShipPC(userID, shipPrice, user_point); */
 		
 	}
 }
