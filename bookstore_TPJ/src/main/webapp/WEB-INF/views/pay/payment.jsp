@@ -642,7 +642,7 @@ $(document).ready(function(){
 		},
 		success: function(data) {								
 				
-			location.href="../mypage/order";
+			/* location.href="../mypage/order"; */
 			
 		}
 
@@ -705,6 +705,7 @@ function submitCheck(){
 	} else {
 		
 		return true;
+		
 										      
 
 	}

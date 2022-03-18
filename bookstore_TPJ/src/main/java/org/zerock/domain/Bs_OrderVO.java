@@ -23,6 +23,7 @@ public class Bs_OrderVO {
 	private int od_totalprice;   //db 추가 
 	
 	private String user_name;       // 구매자 도서리스트 사용을 위한 추가(이주영 2021 07 06)
+	private int user_grade;
 	private int bk_salePrice;
 	
 }

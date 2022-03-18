@@ -128,8 +128,7 @@ public class PayController {
 	}
 	
 	@RequestMapping(value ="/LastPayment", method = RequestMethod.POST)
-	@ResponseBody
-	public void lastPayment(@ModelAttribute(value="Bs_PayInfoDTO") Bs_PayInfoDTO dto, HttpSession session) throws Exception {
+	public String lastPayment(@ModelAttribute(value="Bs_PayInfoDTO") Bs_PayInfoDTO dto, HttpSession session) throws Exception {
 		
 		log.info("dto  : " + dto);	
 		
@@ -144,6 +143,8 @@ public class PayController {
 			payInfo = dto.getPayInfolist().get(i);
 			
 			payInfo.setReci_addr(odAdress);
+			payInfo.setSaleBkPrice(tPrice);
+			
 			
 			service.payContent(payInfo);
 			service.addBookSel(payInfo);
@@ -215,7 +216,8 @@ public class PayController {
 		
 		}
 		
-	
+		return "redirect:/mypage/order";
+		
 	}
 	
 

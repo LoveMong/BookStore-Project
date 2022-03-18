@@ -57,7 +57,7 @@
                               <th scope="col">주문 도서</th>
                               <th scope="col">도서 가격</th>
                               <th scope="col">주문 수량</th>
-                              <th scope="col">구매자</th>
+                              <th scope="col">구매자(ID)</th>
                               <th scope="col">주문 금액(할인 적용)</th>
                               <th scope="col">배송지</th>
                               <th scope="col">배송 상태</th>
@@ -71,8 +71,20 @@
                                  <th>${list.bk_name}</th>                                 
                                  <th><fmt:formatNumber value="${list.bk_price}" pattern="#,###"/></th>
                                  <th>${list.bk_ordercnt}</th>
-                                 <th>${list.user_name}</th>                          
-                                 <th><fmt:formatNumber value="${list.bk_salePrice}" pattern="#,###"/></th>                           
+                                 <th>${list.user_id}</th>                          
+                                 <th>
+                               		<c:choose>
+										<c:when test="${list.user_grade == '0'}">
+											<fmt:formatNumber value="${list.bk_price*list.bk_ordercnt}" pattern="#,###"/>원
+										</c:when>
+										<c:when test="${list.user_grade == '1'}">
+											<fmt:formatNumber value="${(list.bk_price*list.bk_ordercnt)*0.97}" pattern="#,###"/>원
+										</c:when>
+										<c:otherwise>
+											<fmt:formatNumber value="${(list.bk_price*list.bk_ordercnt)*0.95}" pattern="#,###"/>원
+										</c:otherwise>
+								   </c:choose>	                                 
+                                 </th>                           
                                  <th>${list.user_addr}</th>                                                      
                                  <th><form id="" method="get">
                                  <input type="hidden" id="cNum${vs.getIndex()}" value="${list.od_dv}">

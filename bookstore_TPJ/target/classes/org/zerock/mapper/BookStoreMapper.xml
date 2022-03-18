@@ -86,7 +86,7 @@
 
 <select id="orderList" resultType="org.zerock.domain.Bs_OrderVO">
 
-	SELECT od_num, od_date, bk_price, bk_name, bk_ordercnt, user_name, bs_order.user_addr, od_dv, bk_salePrice
+	SELECT od_num, od_date, bk_price, bk_name, bk_ordercnt, bs_order.user_id, user_grade, bs_order.user_addr, od_dv, bk_salePrice
 	
 	FROM bs_book
 	

@@ -150,8 +150,19 @@
 										상품명 :<span id="productName${i.index }">${list.bk_name }</span>
 										(<span id="amount${i.index}">${list.bk_ordercnt } </span>개)
 										<br>
-										금액 : <fmt:formatNumber value="${list.bk_salePrice}" pattern="#,###"/>원
-										</span>
+										금액 : 											
+										<c:choose>
+												<c:when test="${login.user_rank == '0'}">
+													<fmt:formatNumber value="${list.bk_price*list.bk_ordercnt}" pattern="#,###"/>원
+												</c:when>
+												<c:when test="${login.user_rank == '1'}">
+													<fmt:formatNumber value="${(list.bk_price*list.bk_ordercnt)*0.97}" pattern="#,###"/>원
+												</c:when>
+												<c:otherwise>
+													<fmt:formatNumber value="${(list.bk_price*list.bk_ordercnt)*0.95}" pattern="#,###"/>원
+												</c:otherwise>
+										</c:choose>											
+									</span>
 										 </a>
 									</td>
 									<td class="tb_td_state">${list.user_addr}</td>
